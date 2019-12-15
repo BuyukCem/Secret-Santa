@@ -1,0 +1,27 @@
+version: "3.6"
+services:
+  app:
+    image: 'node:latest'
+    working_dir: /home/node/app
+    command:
+      - /bin/sh
+      - '-c'
+      - 'npm install && npm start'
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+    networks:
+      - my-network
+    volumes:
+      - './src:/home/node/app'
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27020:27017"
+    networks:
+      - my-network
+networks:
+  my-network:
+    driver: bridge
